@@ -1,0 +1,4 @@
+<h1>Live Stock Price Updates</h1>
+<button (click)="subscribeToSTockUpdates()">Subscribe to stock updates</button>
+<button (click)="unsubscribeFromUpdates()">Unsubscribe</button>
+<p *ngIf="lastestPrice">Latest Price: {{lastestPrice}}</p>

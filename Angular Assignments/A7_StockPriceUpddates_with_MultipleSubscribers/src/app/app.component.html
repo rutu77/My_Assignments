@@ -1,0 +1,14 @@
+<div style="text-align:center">
+  <h1>Live Stock Price Updates</h1>
+  <button (click)="addnewSubscriber()">Get New Subscriber</button>
+  <div *ngFor="let item of subscribers">
+    Subscriber: 
+    <button (click)="subscribeToSTockUpdates()">Subscribe to stock updates</button>
+  <p *ngIf="lastestPrice">Latest Price: {{lastestPrice}}</p>
+  <button (click)="ngOnDestroy()">Unsubscribe</button>
+  </div>
+  <p *ngIf="count>0">Subscriber Count: {{count}}</p>
+</div>
+
+<!-- <app-stockprice></app-stockprice> -->
+<!-- <app-livestockprice></app-livestockprice> -->
