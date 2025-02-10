@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Javascript</title>
+    </head>
+    <body>
+        <script>
+            let product_price= parseInt(prompt("Enter Product Price: "));
+            discount=parseInt(prompt("Enter custom discount: "));
+            function OnlineStore(product_price,discount){
+                return {
+                    current: function(discount){
+                        console.log("Current Discount is:"+discount +"%")
+                    },
+                    discount_price: function(discount){
+                        price=product_price-(discount/100)*product_price;
+                        console.log("Discounted price is",price);
+                    }
+                }
+            }
+            var newFunction = OnlineStore(product_price);
+            newFunction.current(discount);
+            newFunction.discount_price(discount); 
+
+            let store=(function(){
+                return {
+                    current: function(discount){
+                        console.log("Current Discount iss:"+discount +"%")
+                    },
+                    discount_price: function(product_price,discount){
+                        price=product_price-(discount/100)*product_price;
+                        console.log("Discounted price is",price);
+                    }
+                };
+            })
+            ();
+
+            store.current(discount);
+            store.discount_price(product_price,discount); 
+        </script>
+    </body>
+</html>

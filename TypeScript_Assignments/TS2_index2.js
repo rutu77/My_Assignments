@@ -1,0 +1,47 @@
+// //1
+// function getLastElement<T>(arr: T[]): T {
+//     return arr[arr.length - 1];
+//   }
+//   const numbers = [1, 2, 3, 4];
+//   const last = getLastElement(numbers); 
+//   console.log(last); 
+// //2
+// interface Product{
+//     id: number,
+//     name: string,
+//     price:number;
+// }
+// function displayDetails(){
+//     const product: Product = {
+//         id: 101,
+//         name: "Table",
+//         price:2000
+//     };
+//     console.log(product);
+// }
+// displayDetails();
+//3
+var OrderStatus;
+(function (OrderStatus) {
+    OrderStatus[OrderStatus["Pending"] = 0] = "Pending";
+    OrderStatus[OrderStatus["Shipped"] = 1] = "Shipped";
+    OrderStatus[OrderStatus["Delivered"] = 2] = "Delivered";
+})(OrderStatus || (OrderStatus = {}));
+function handleStatus(status) {
+    switch (status) {
+        case OrderStatus.Pending:
+            console.log("Order is pending.");
+            break;
+        case OrderStatus.Shipped:
+            console.log("Order has been shipped.");
+            break;
+        case OrderStatus.Delivered:
+            console.log("Order delivered.");
+            break;
+        default:
+            console.log("Unknown status.");
+    }
+}
+handleStatus(OrderStatus.Pending);
+handleStatus(OrderStatus.Shipped);
+handleStatus(OrderStatus.Delivered);

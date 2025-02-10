@@ -1,0 +1,36 @@
+.task-list {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  .task-list h2 {
+    color: #333;
+    text-align: center;
+  }
+  
+  .task-list div {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .task-list p {
+    margin: 5px 0;
+  }
+  
+  .task-list button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    background-color: rgb(55, 122, 215);
+    color: white;
+    border: none;
+    border-radius: 3px;
+  }
+  
+  .task-list button:hover {
+    background-color: #0e336e;
+  }
+  

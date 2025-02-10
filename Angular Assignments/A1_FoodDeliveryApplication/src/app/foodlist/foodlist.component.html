@@ -1,0 +1,9 @@
+<h2>Food Menu</h2>
+<div>
+  <div *ngFor="let fooditem of foodItems; let i = index">
+    <p>{{ fooditem.name }} - ${{ fooditem.price }}</p>
+    <button (click)="addToCart(fooditem)">Add to cart</button>
+  </div>
+</div>
+
+

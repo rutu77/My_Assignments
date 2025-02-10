@@ -1,0 +1,10 @@
+.home{
+    text-align: center;
+    color: blueviolet;
+}
+
+section img{
+    height: 100%;
+    width: 50%;
+    object-fit: cover;
+}

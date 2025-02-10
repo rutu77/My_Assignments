@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Registeration form</title>
+    </head>
+    <body style="background-color: bisque">
+        <center>
+        <h1>Student Registeration Form</h1>
+        <form action="#" method="post">
+            <label for="name">Enter Student Name:</label><br>
+            <input type="name" id="name" name="name" placeholder="Enter your name" required minlength="2"><br><br>
+
+            <label for="num">Enter Contact No.:</label><br>
+            <input type="tel" id="num" name="num" pattern="[0-9]{10}" placeholder="Enter your contact no." required><br><br>
+
+            <label for="email">Enter Email ID:</label><br>
+            <input type="email" id="email" name="email" placeholder="Enter your email id" required><br><br>
+
+            <label for="dob">Enter Date of Birth:</label><br>
+            <input type="date" id="dob" name="dob" placeholder="Enter your date of birth" required><br><br>
+
+            <label for="age">Enter Age:</label><br>
+            <input type="number" min="18" max="60" id="age" name="age" placeholder="Enter age" required><br><br>
+
+            <label for="pass">Enter Password:</label><br>
+            <input type="password" id="pass" name="pass" placeholder="Enter your password" required minlength="8"><br><br>
+
+            <label for="photo">Upload Photo:</label><br>
+            <input type="file" id="photo" name="photo" placeholder="Upload your photo" required><br><br>
+
+            <input type="submit">
+        </form> 
+        </center>
+    </body>
+</html>

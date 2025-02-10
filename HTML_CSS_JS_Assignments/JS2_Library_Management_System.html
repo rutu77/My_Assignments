@@ -1,0 +1,158 @@
+<script>
+class Library {
+    constructor() {
+        this.books = [];
+        this.members = [];
+    }
+
+    //Add a book
+    addBook(id, title, author) {
+        const book = new Book(id, title, author);
+        this.books.push(book);
+        console.log(`${title} book is added`);
+    }
+    //Register a member
+    registerMember(id, name) {
+        const member = new Member(id, name);
+        this.members.push(member);
+        console.log(`${name} member is registered`);
+    }
+
+    //borrow a book
+    borrowBook(mid, bid) {
+        const member = this.members.find(m => m.id === mid);
+        const book = this.books.find(b => b.id === bid);
+        
+        if (!member) {
+            console.error("Member not found");
+            return;
+        }
+        if (!book) {
+            console.error("Book not found");
+            return;
+        }
+        
+        if (book.isAvailable) {
+            book.isAvailable = false;
+            member.borrowedBooks.push(book);
+            console.log(`${book.title} borrowed by ${member.name}`);
+        } else {
+            console.log(`${book.title} is not available`);
+        }
+    }
+
+    //return a book
+    returnBook(mid, bid) {
+        const member = this.members.find(m => m.id === mid);
+        const book = this.books.find(b => b.id === bid);
+        
+        if (!member) {
+            console.error("Member not found");
+            return;
+        }
+        if (!book) {
+            console.error("Book not found");
+            return;
+        }
+
+        const index = member.borrowedBooks.findIndex(b => b.id === bid);
+
+        if (index !== -1) {
+            member.borrowedBooks.splice(index, 1);
+            book.isAvailable = true;
+            console.log(`${book.title} returned by ${member.name}`);
+        } else {
+            console.log("Book not borrowed by this member");
+        }
+    }
+
+    //view all books
+    viewAllBooks() {
+        this.books.forEach(book => console.log(book.id, book.title, book.isAvailable));
+    }
+
+    //view partiular ember info
+    viewMemberInfo(memberId) {
+        const member = this.members.find(m => m.id === memberId);
+
+        if (!member) {
+            console.error("Member is not found");
+            return;
+        }
+        console.log(`Member Name: ${member.name}`);
+        console.log("Borrowed Books:");
+        member.borrowedBooks.forEach(book => {
+            console.log(`ID: ${book.id}, Title: ${book.title}, Author: ${book.author}`);
+        });
+    }
+}
+
+class Member {
+    constructor(id, name) {
+        this.id = id;
+        this.name = name;
+        this.borrowedBooks = [];
+    }
+
+    canBorrow() {
+        return this.borrowedBooks.length < 5;
+    }
+}
+
+class Book {
+    constructor(id, title, author) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.isAvailable = true;
+    }
+}
+
+const library = new Library();
+library.addBook(101, "Atomic Habits", "James Clear");
+
+function makeChoice() {
+    let choice;
+    do {
+        choice = +prompt("1. Add Book\n2. Register Member\n3. Borrow Book\n4. Return Book\n5. View All Books\n6. View Member Details\n7. Search Books\n8. Exit");
+
+        switch(choice) {
+            case 1:
+                const bookId = +prompt("Enter book ID:");
+                const bookTitle = prompt("Enter book title:");
+                const bookAuthor = prompt("Enter book author:");
+                library.addBook(bookId, bookTitle, bookAuthor);
+                break;
+            case 2:
+                const memberId = +prompt("Enter member ID:");
+                const memberName = prompt("Enter member name:");
+                library.registerMember(memberId, memberName);
+                break;
+            case 3:
+                const borrowBookId = +prompt("Enter book ID:");
+                const borrowMemberId = +prompt("Enter member ID:");
+                library.borrowBook(borrowMemberId, borrowBookId);
+                break;
+            case 4:
+                const returnBookId = +prompt("Enter book ID:");
+                const returnMemberId = +prompt("Enter member ID:");
+                library.returnBook(returnMemberId, returnBookId);
+                break;
+            case 5:
+                library.viewAllBooks();
+                break;
+            case 6:
+                const viewMemberId = +prompt("Enter member ID:");
+                library.viewMemberInfo(viewMemberId);
+                break;
+            case 7:
+                console.log("Exited");
+                break;
+            default:
+                console.error("Invalid choice. Please try again.");
+        }
+    } while (choice !== 7);
+}
+
+makeChoice();
+</script>

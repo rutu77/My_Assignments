@@ -1,0 +1,23 @@
+<div class="task-list">
+  <h2>Task List</h2>
+  <div *ngFor="let task of tasks">
+    <p><strong>{{ task.name }}</strong> ({{ task.priority }})</p>
+    <p>Status: {{ task.status }}</p>
+    <button (click)="updateStatus(task.id, 'Pending')">Pending</button>
+    <button (click)="updateStatus(task.id, 'In Progress')">In Progress</button>
+    <button (click)="updateStatus(task.id, 'Completed')">Completed</button>
+    <button (click)="deleteTask(task.id)">Delete</button>
+  </div>
+</div>
+
+<!-- <div class="task-list">
+  <h2>Task List</h2>
+  <div *ngFor="let task of tasks">
+    <p><strong>{{ task.name }}</strong> ({{ task.priority }})</p>
+    <p>Status: {{ task.status }}</p>
+    <shared label="Pending" (click)="updateStatus(task.id, 'Pending')"></shared>
+    <shared label="In Progress" (click)="updateStatus(task.id, 'In Progress')"></shared>
+    <shared label="Completed" (click)="updateStatus(task.id, 'Completed')"></shared>
+    <button (click)="deleteTask(task.id)">Delete</button>
+  </div>
+</div> -->

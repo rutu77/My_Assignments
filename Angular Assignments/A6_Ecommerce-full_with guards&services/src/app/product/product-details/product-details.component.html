@@ -1,0 +1,10 @@
+<div *ngIf="product">
+  <h2>{{ product.name }}</h2>
+  <p>Price: {{ product.price }}</p>
+</div>
+<div *ngIf="!product">
+  <p>Product not found.</p>
+</div>
+
+
+<a [routerLink]="['/products']">Product list</a>

@@ -1,0 +1,175 @@
+<script>
+class Package {
+    constructor(id, weight, destination) {
+        this.id = id;
+        this.weight = weight;
+        this.destination = destination;
+    }
+}
+
+class Shipment {
+    constructor(id, packages, courier) {
+        this.id = id;
+        this.packages = packages;
+        this.status = "In transit";
+        this.courier = courier;
+    }
+}
+
+class Courier {
+    constructor(id, name, vehicle) {
+        this.id = id;
+        this.name = name;
+        this.vehicle = vehicle;
+    }
+}
+
+//main class
+class ShippingCompany {
+    constructor() {
+        this.packages = [];
+        this.shipments = [];
+        this.couriers = [];
+    }
+
+    //Add a package
+    addPackage(id, weight, destination) {
+        const pkg = new Package(id, weight, destination);
+        //adding package to packages array
+        this.packages.push(pkg);
+        console.log(`Package ${id} added!`);
+    }
+
+    //Register a Courier
+    registerCourier(id, name, vehicle) {
+        const courier = new Courier(id, name, vehicle);
+        //adding courier to couriers array
+        this.couriers.push(courier);
+        console.log(`Courier ${id} registered`);
+    }
+
+    //Create a new shipment
+    createShipment(id, packageIds, courierId) {
+        //getting all package id's from the packages array
+        const packages = this.packages.filter(p => packageIds.includes(p.id));
+        //finding the user entered courier id
+        const courier = this.couriers.find(c => c.id === courierId);
+        if (packages.length && courier) {
+            const shipment = new Shipment(id, packages, courier);
+            this.shipments.push(shipment);
+            console.log(`Shipment ${id} created`);
+        } 
+        else {
+            console.error("Invalid packages or courier");
+        }
+    }
+
+    //Trach a shipment
+    trackShipment(shipmentId) {
+        //finding the user entered shipment id
+        const shipment = this.shipments.find(s => s.id === shipmentId);
+        if (shipment) {
+            console.log(`Shipment ${shipment.id} is currently ${shipment.status}`);
+        } else {
+            console.error("Shipment not found");
+        }
+    }
+
+    //Update the shipment status
+    updateShipmentStatus(shipmentId, status) {
+        //finding the user entered shipment id
+        const shipment = this.shipments.find(s => s.id === shipmentId);
+        if (shipment) {
+            shipment.status = status;
+            console.log(`Shipment ${shipment.id} status updated to ${status}`);
+        } else {
+            console.error("Shipment not found");
+        }
+    }
+
+    //View all packages info
+    viewAllPackages() {
+        this.packages.forEach(pkg => console.log(`ID: ${pkg.id}, Weight: ${pkg.weight}, Destination: ${pkg.destination}`));
+    }
+
+    //View a particular courier info
+    viewCourierInfo(courierId) {
+        //finding the user entered courier id
+        const courier = this.couriers.find(c => c.id === courierId);
+        if (courier) {
+            console.log(`Courier ID: ${courier.id}, Name: ${courier.name}, Vehicle: ${courier.vehicle}`);
+            //getting the shipments courier id
+            const courierShipments = this.shipments.find(s => s.courier.id === courierId);
+            console.log("Shipments handled:");
+            courierShipments.forEach(shipment => {
+                console.log(`Shipment ID: ${shipment.id}, Status: ${shipment.status}`);
+                console.log("Packages:");
+                shipment.packages.forEach(pkg => {
+                    console.log(`ID: ${pkg.id}, Weight: ${pkg.weight}, Destination: ${pkg.destination}`);
+                });
+            });
+        } else {
+            console.error("Courier not found");
+        }
+    }
+}
+
+const company = new ShippingCompany();
+//Example
+// company.addPackage(101, 1000, 'Asia');
+// company.registerCourier(1, 'Rutuja', 'Truck');
+// company.createShipment(1, [101], 1);
+
+//Function to get user choice
+function makeChoice() {
+    let choice;
+    do {
+        choice = +prompt("1. Add Package\n2. Register Courier\n3. Create Shipment\n4. Track Shipment\n5. Update Shipment Status\n6. View All Packages\n7. View Courier Info\n8. Exit");
+
+        switch (choice) {
+            case 1:
+                const pid = +prompt("Enter Package ID: ");
+                const pweight = +prompt("Enter Package Weight: ");
+                const pdestination = prompt("Enter Package Destination: ");
+                company.addPackage(pid, pweight, pdestination);
+                break;
+            case 2:
+                const cid = +prompt("Enter Courier ID: ");
+                const cname = prompt("Enter Courier Name: ");
+                const cvehicle = prompt("Enter Vehicle Name: ");
+                company.registerCourier(cid, cname, cvehicle);
+                break;
+            case 3:
+                const sid = +prompt("Enter Shipment ID: ");
+                const packageIds = prompt("Enter Package IDs (comma-separated): ").split(',').map(id => +id);
+                const courierId = +prompt("Enter Courier ID: ");
+                company.createShipment(sid, packageIds, courierId);
+                break;
+            case 4:
+                const trackId = +prompt("Enter Shipment ID: ");
+                company.trackShipment(trackId);
+                break;
+            case 5:
+                const updateId = +prompt("Enter Shipment ID: ");
+                const status = prompt("Enter new status: ");
+                company.updateShipmentStatus(updateId, status);
+                break;
+            case 6:
+                company.viewAllPackages();
+                break;
+            case 7:
+                const viewCid = +prompt("Enter Courier ID: ");
+                company.viewCourierInfo(viewCid);
+                break;
+            case 8:
+                console.log("Exited");
+                break;
+            default:
+                console.error("Invalid choice! Please try again.");
+        }
+    } while (choice !== 8);
+}
+
+makeChoice();
+</script>
+

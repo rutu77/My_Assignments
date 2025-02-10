@@ -1,0 +1,12 @@
+<div class="product-list">
+  <button (click)="addProduct()">Add New Product</button>
+  <div *ngFor="let product of products" class="product-item">
+    <h2>{{ product.name }}</h2>
+    <p>{{ product.price }}</p>
+    <button (click)="viewDetails(product)">View Details</button>
+    <button (click)="removeProduct(product)">Remove Product</button>
+    <button (click)="addToOrder(product,1)">Add Ordert</button>
+  </div>
+</div>
+
+<a [routerLink]="['productdetails']"></a>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <h1>Electronic Store</h1>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+            <a href="Register.html"><button>Register/Sign In</button></a>
+        </nav>
+    </header>
+
+    <section class="filters">
+        <h2>Filter Products</h2>
+        <label>
+            Category:
+            <select id="filter-category">
+                <option value="all">All</option>
+                <option value="Laptop">Laptop</option>
+                <option value="Phone">Phone</option>
+                <option value="TV">TV</option>
+                <option value="Refrigerator">Refrigerator</option>
+                <option value="Printer">Printer</option>
+            </select>
+        </label>
+        <label>
+            Price Range:
+            <input type="range" id="filter-price" min="0" max="100000" step="100" value="100000">
+            <span id="price-value">₹100000</span>
+        </label>
+        <label>
+            Rating:
+            <select id="filter-rating">
+                <option value="all">All</option>
+                <option value="1">1 Star & Above</option>
+                <option value="2">2 Stars & Above</option>
+                <option value="3">3 Stars & Above</option>
+                <option value="4">4 Stars & Above</option>
+                <option value="5">5 Stars</option>
+            </select>
+        </label>
+        <label>
+            Sort By:
+            <select id="sort-options">
+                <option value="none">None</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="rating-desc">Rating: High to Low</option>
+                <option value="rating-asc">Rating: Low to High</option>
+            </select>
+        </label>
+    </section>
+
+    <main>
+        <section id="product-grid" class="product-grid"></section>
+
+        <section class="cart-summary">
+            <h2>Cart Summary</h2>
+            <div id="cart-items"></div>
+            <p>Total: <span id="cart-total">₹0.00</span></p>
+        </section>
+    </main>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

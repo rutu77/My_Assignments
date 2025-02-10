@@ -1,0 +1,11 @@
+<div class="order-list">
+  <div *ngFor="let order of orders" class="order-item">
+    <h2>{{ order.productName }}</h2>
+    <p>Quantity: {{ order.quantity }}</p>
+    <p>Total Price: {{ order.totalPrice }}</p>
+    <button (click)="viewDetails(order)">View Details</button> 
+    <button (click)="removeOrder(order)">Remove Order</button>
+  </div>
+</div>
+
+<!-- <a class="aclass" [routerLink]="['orderdetails']"></a> -->
