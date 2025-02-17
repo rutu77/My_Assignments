@@ -1,0 +1,12 @@
+div{
+    background-color: rgb(238, 238, 237);
+    text-align: center;
+}
+div button{
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
+    background-color: rgb(95, 175, 225);
+    border-radius: 5px;
+    border-style: none;
+}
