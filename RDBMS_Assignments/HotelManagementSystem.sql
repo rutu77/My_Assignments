@@ -24,8 +24,8 @@ CREATE TABLE tbl_Rooms4(
     Status VARCHAR(50)
 );
 
-UPDATE tbl_Rooms4
-SET Status = 'Available' WHERE Status NOT IN ('Booked', 'Available');
+--UPDATE tbl_Rooms4
+--SET Status = 'Available' WHERE Status NOT IN ('Booked', 'Available');
 
 ALTER TABLE tbl_Rooms4
 ADD CONSTRAINT check_Statuss CHECK (Status IN ('Booked', 'Available'));
@@ -131,6 +131,7 @@ INSERT INTO tbl_Employees4 (EmployeeName, Position, Salary, HireDate, ManagerID)
 ('Emily Davis', 'Chef', 50000.00, '2022-05-18', 1),
 ('David Wilson', 'Bellboy', 25000.00, '2023-02-01', 1);
 
+
 --2 Queries using joins
 SELECT c.CustomerName, r.RoomType, b.CheckInDate, b.TotalAmount FROM tbl_Bookings4 b
 JOIN tbl_Customers4 c ON c.CustomerID=b.CustomerId
@@ -146,6 +147,7 @@ INSERT INTO tbl_Rooms4 (RoomType, PricePerNight, Status) VALUES
 SELECT RoomId, RoomType FROM tbl_Rooms4
 WHERE RoomID NOT IN (SELECT DISTINCT RoomID FROM tbl_Bookings4)
 
+
 --3 subqueries
 INSERT INTO tbl_Bookings4 (CustomerID, RoomID, CheckInDate, CheckOutDate, TotalAmount) VALUES
 (1, 7, '2023-01-10', '2023-01-15', 5000.00),
@@ -158,6 +160,7 @@ GROUP BY CustomerID HAVING COUNT(*)>1)
 SELECT RoomID, RoomType, PricePerNight FROM tbl_Rooms4
 WHERE PricePerNight= (SELECT MAX(PricePerNight) FROM tbl_Rooms4)
 
+
 --4 Views
 CREATE VIEW ActiveBooking_view AS
 SELECT c.CustomerName, r.RoomType, b.CheckInDate, b.CheckOutDate FROM tbl_Bookings4 b
@@ -167,10 +170,12 @@ WHERE r.Status='Booked';
 
 SELECT * FROM ActiveBooking_view
 
+
 --5 Indexing
 CREATE INDEX idx_roomtype ON tbl_Rooms4(RoomType)
 
 CREATE INDEX idx_checkinout ON tbl_Bookings4(CheckInDate,CheckOutDate)
+
 
 --6 Stored Procedures and Functions
 CREATE PROCEDURE sp_MonthlyRevenue
@@ -194,6 +199,7 @@ END;
 
 SELECT dbo.fn_StayDays('2023-01-10', '2023-01-15') AS StayDays;
 
+
 --7 Triggers
 CREATE TRIGGER tg_BookingCancel
 ON tbl_Bookings4
@@ -208,8 +214,52 @@ END;
 SELECT * FROM tbl_Rooms4
 SELECT * FROM tbl_Bookings4
 
-DELETE FROM tbl_Bookings4 WHERE BookingID = 6;
+DELETE FROM tbl_Bookings4 WHERE BookingID = 10;
 SELECT RoomID, Status FROM tbl_Rooms4 WHERE RoomID = 7;
+
+---------------------------------
+CREATE TRIGGER tg_RoomBooked
+ON tbl_Bookings4
+AFTER INSERT
+AS
+BEGIN
+    UPDATE tbl_Rooms4
+    SET Status = 'Booked'
+    WHERE RoomID = (SELECT RoomID FROM INSERTED);
+END;
+
+--SELECT * FROM tbl_Rooms4
+--SELECT * FROM tbl_Bookings4
+
+INSERT INTO tbl_Bookings4 (CustomerID, RoomID, CheckInDate, CheckOutDate, TotalAmount) VALUES
+(1, 7, '2023-01-10', '2023-01-15', 5000.00);
+SELECT RoomID, Status FROM tbl_Rooms4 WHERE RoomID = 7;
+
+--------------------------------------------------------------------------------------------
+ALTER TABLE tbl_ServiceRequests4
+DROP COLUMN TotalServiceCost
+
+CREATE TRIGGER tg_UpdateTotalAmount1
+ON tbl_ServiceRequests4
+AFTER INSERT
+AS
+BEGIN
+	DECLARE @ServiceID INT
+	DECLARE @BookingID INT;
+	DECLARE @TotalServiceCost DECIMAL(10,2);
+	SELECT @BookingID =i.BookingID, @ServiceID=i.ServiceID FROM inserted i
+	SELECT @TotalServiceCost= Price FROM tbl_Services4 WHERE ServiceID= @ServiceID
+
+    UPDATE tbl_Bookings4
+    SET TotalAmount = TotalAmount + @TotalServiceCost
+    WHERE BookingID = @BookingID;
+END;
+
+INSERT INTO tbl_ServiceRequests4 (ServiceID, BookingID, RequestDate, Quantity) VALUES
+(1, 7, '2023-01-11', 1);
+
+SELECT * FROM tbl_Bookings4
+
 
 --8 security and privileges
 CREATE ROLE HotelManager7;
@@ -219,6 +269,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_Payments4 TO HotelManager7
 CREATE ROLE FrontDeskStaff7
 GRANT SELECT ON Rooms TO FrontDeskStaff7;
 
+
 --9 Backup And Restore
 BACKUP DATABASE JIBE_Main_Training
 TO DISK = 'C:\Backup\HotelManagement_Backup.bak'
@@ -227,6 +278,7 @@ WITH FORMAT, INIT;
 RESTORE DATABASE JIBE_Main_Training
 FROM DISK = 'C:\Backup\HotelManagement_Backup.bak'
 WITH REPLACE;
+
 
 --10 Full Text
 EXEC sp_fulltext_database 'enable';
